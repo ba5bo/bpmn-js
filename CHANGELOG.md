@@ -6,6 +6,246 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.1.1
+
+* `FIX`: adjust search to prioritize start of word and exact matches ([bpmn-io/diagram-js#953](https://github.com/bpmn-io/diagram-js/pull/953))
+* `FIX`: ignore whitespace when searching ([bpmn-io/diagram-js#954](https://github.com/bpmn-io/diagram-js/pull/954))
+
+## 18.1.0
+
+* `FIX`: clear selection when opening search pad ([bpmn-io/diagram-js#947](https://github.com/bpmn-io/diagram-js/pull/947))
+* `FIX`: correct dangling selection after search pad interaction ([bpmn-io/diagram-js#947](https://github.com/bpmn-io/diagram-js/pull/947))
+* `DEPS`: update to `diagram-js@15.2.2`
+
+## 18.0.0
+
+* `FEAT`: remove `outline` from `Viewer` modules ([#2135](https://github.com/bpmn-io/bpmn-js/issues/2135))
+* `FEAT`: make `Canvas` a focusable element ([bpmn-io/diagram-js#662](https://github.com/bpmn-io/diagram-js/pull/662))
+* `FEAT`: implicit keyboard binding ([bpmn-io/diagram-js#662](https://github.com/bpmn-io/diagram-js/pull/662))
+* `FEAT`: integrate with global `search` ([#2235](https://github.com/bpmn-io/bpmn-js/pull/2235))
+* `FEAT`: integrate `popup-menu` with `search` ([bpmn-io/diagram-js#932](https://github.com/bpmn-io/diagram-js/pull/932))
+* `FEAT`: recognize modern `search` tokens in `search-pad` ([bpmn-io/diagram-js#932](https://github.com/bpmn-io/diagram-js/pull/932))
+* `FIX`: correctly handle duplicate entries and whitespace in `search` ([bpmn-io/diagram-js#932](https://github.com/bpmn-io/diagram-js/pull/932))
+* `FIX`: find `search` terms across all keys ([bpmn-io/diagram-js#932](https://github.com/bpmn-io/diagram-js/pull/932))
+* `FIX`: `search` always returns tokens for matched items ([bpmn-io/diagram-js#932](https://github.com/bpmn-io/diagram-js/pull/932))
+* `FIX`: prevent crash during label adjustment ([#2239](https://github.com/bpmn-io/bpmn-js/issues/2239))
+* `FIX`: keep existing loop characteristics when toggling through the replace menu ([#2251](https://github.com/bpmn-io/bpmn-js/pull/2251))
+* `FIX`: prevent covering multi selection with black box in `Viewer` ([#2135](https://github.com/bpmn-io/bpmn-js/issues/2135))
+* `FIX`: generate types for main entry ([`986e2bb`](https://github.com/bpmn-io/bpmn-js/commit/986e2bb51ea301e6e0df56f3606a27424fb90179))
+* `FIX`: correct handling of group name with whitespace only ([#2231](https://github.com/bpmn-io/bpmn-js/issues/2231))
+* `DEPS`: update to `bpmn-moddle@9` ([#2114](https://github.com/bpmn-io/bpmn-js/pull/2114))
+* `DEPS`: update to `diagram-js@15.1.0`
+* `DEPS`: update to `diagram-js-direct-editing@3.2.0`
+
+### Breaking Changes
+
+* Require `Node >= 20`
+* `Canvas` is now a focusable element and provides better support for native browser behaviors. Focus can be controlled with new `focus` and `restoreFocus` APIs.
+* Keyboard is now implicitly bound to canvas SVG element. Calls to `keyboard.bind` and `keyboard.bindTo` now result with a descriptive console error and have no effect.
+
+## 17.11.1
+
+* `FIX`: handle searching elements without labels ([#2232](https://github.com/bpmn-io/bpmn-js/issues/2232), [#2234](https://github.com/bpmn-io/bpmn-js/pull/2234))
+
+## 17.11.0
+
+* `FEAT`: align search styles with other popups ([#2187](https://github.com/bpmn-io/bpmn-js/pull/2187))
+* `FEAT`: prioritize start of tokens in search results ([#2187](https://github.com/bpmn-io/bpmn-js/pull/2187))
+* `FIX`: do not commit viewport changes on `ESC` ([#2189](https://github.com/bpmn-io/bpmn-js/issues/2189), [#2187](https://github.com/bpmn-io/bpmn-js/pull/2187))
+* `DEPS`: update to `diagram-js@14.10.0`
+
+## 17.10.0
+
+* `CHORE`: correct various type hints ([#2228](https://github.com/bpmn-io/bpmn-js/issues/2228))
+* `FIX`: pasting compensation activity without boundary event ([#2070](https://github.com/bpmn-io/bpmn-js/issues/2070))
+* `FIX`: lane resize constraints for se and nw direction ([#2209](https://github.com/bpmn-io/bpmn-js/issues/2209))
+* `FIX`: auto place elements vertically in sub-processes ([#2127](https://github.com/bpmn-io/bpmn-js/issues/2127))
+* `FIX`: hide lane label during direct editing
+* `DEPS`: update to `diagram-js@14.9.0`
+
+## 17.9.2
+
+* `FIX`: keep direction when collapsing pools ([#2208](https://github.com/bpmn-io/bpmn-js/issues/2208))
+
+## 17.9.1
+
+* `FIX`: show delete action for labels ([#2163](https://github.com/bpmn-io/bpmn-js/issues/2163))
+
+## 17.9.0
+
+* `FIX`: remove incorrect attribute in replace menu ([#2196](https://github.com/bpmn-io/bpmn-js/pull/2196))
+* `DEPS`: update to diagram-js@14.7.2
+
+## 17.8.3
+
+* `FIX`: add accessible label to drill down button ([#2194](https://github.com/bpmn-io/bpmn-js/pull/2194))
+
+## 17.8.2
+
+* `FIX`: do not suggest root elements in search ([#2143](https://github.com/bpmn-io/bpmn-js/issues/2143))
+
+## 17.8.1
+
+* `FIX`: gracefully handle missing process DI in drilldown ([#2180](https://github.com/bpmn-io/bpmn-js/pull/2180))
+* `FIX`: do not cause HTML validation errors on move preview ([#2179](https://github.com/bpmn-io/bpmn-js/issues/2179))
+* `DEPS`: update to `diagram-js@14.7.1`
+
+## 17.8.0
+
+* `FEAT`: keep global elements when deleting last participant ([#2175](https://github.com/bpmn-io/bpmn-js/pull/2175))
+* `FIX`: allow undo after deleting last participants and data store ([#1676](https://github.com/bpmn-io/bpmn-js/issues/1676))
+* `FIX`: allow styling markers with `canvas.addMarker` and css ([#2173](https://github.com/bpmn-io/bpmn-js/pull/2173))
+* `CHORE`: render flow markers as part of `djs-visual` ([#2173](https://github.com/bpmn-io/bpmn-js/pull/2173))
+* `DEPS`: update to `diagram-js@14.7.0`
+
+## 17.7.1
+
+* `FIX`: correct call activity outline ([#2167](https://github.com/bpmn-io/bpmn-js/issues/2167))
+* `FIX`: gracefully handle missing `BPMNDiagram#plane` ([#2172](https://github.com/bpmn-io/bpmn-js/pull/2172), [#2171](https://github.com/bpmn-io/bpmn-js/pull/2171))
+
+## 17.7.0
+
+* `DEPS`: update to `diagram-js@14.6.0`
+
+## 17.6.4
+
+* `DEPS`: update to `diagram-js@14.5.4`
+
+## 17.6.3
+
+* `DEPS`: update to `diagram-js@14.5.3`
+
+## 17.6.2
+
+* `DEPS`: update to `diagram-js@14.5.2` ([#2158](https://github.com/bpmn-io/bpmn-js/pull/2158))
+
+## 17.6.1
+
+* `DEPS`: update to `diagram-js@14.5.1` ([#2157](https://github.com/bpmn-io/bpmn-js/pull/2157))
+
+## 17.6.0
+
+* `FEAT`: add ability to type services and events ([#2121](https://github.com/bpmn-io/bpmn-js/issues/2121), [#2153](https://github.com/bpmn-io/bpmn-js/pull/2153))
+* `FIX`: remove preview on context pad close ([#2150](https://github.com/bpmn-io/bpmn-js/issues/2150))
+* `FIX`: use tagged template in error logging ([#2151](https://github.com/bpmn-io/bpmn-js/pull/2151))
+
+## 17.5.0
+
+* `FEAT`: remove direct editing outline for embedded labels ([#2147](https://github.com/bpmn-io/bpmn-js/pull/2147))
+* `FEAT`: do not translate technical errors ([#2145](https://github.com/bpmn-io/bpmn-js/pull/2145))
+* `DEPS`: update to `diagram-js-direct-editing@3.0.1`
+
+## 17.4.0
+
+* `FEAT`: do not scale popup menu and context pad
+* `DEPS`: update to `diagram-js@14.4.1`
+
+## 17.3.0
+
+* `FEAT`: auto-place elements vertically ([#2110](https://github.com/bpmn-io/bpmn-js/issues/2110))
+
+## 17.2.2
+
+* `FIX`: correct navigated viewer outline ([#2133](https://github.com/bpmn-io/bpmn-js/issues/2133))
+
+## 17.2.1
+
+* `FIX`: render popup menu on top
+* `DEPS`: update to `diagram-js@14.3.1`
+
+## 17.2.0
+
+* `FEAT`: make popup menu keyboard navigatable
+* `FIX`: address various accessibility issues
+* `FIX`: correct various typing issues
+* `DEPS`: update to `diagram-js@14.3.0`
+* `DEPS`: update to `diagram-js-direct-editing@2.1.2`
+
+## 17.1.0
+
+* `FEAT`: handle splitting vertical lanes ([#2101](https://github.com/bpmn-io/bpmn-js/pull/2101))
+
+## 17.0.2
+
+* `FIX`: create hit boxes for vertical lanes ([#2093](https://github.com/bpmn-io/bpmn-js/issues/2093))
+
+## 17.0.1
+
+* `FIX`: fix rendering of gateway without marker ([#2102](https://github.com/bpmn-io/bpmn-js/pull/2102))
+
+## 17.0.0
+
+* `FEAT`: add to selection through SHIFT ([bpmn-io/diagram-js#796](https://github.com/bpmn-io/diagram-js/pull/851), [#2053](https://github.com/bpmn-io/bpmn-js/issues/2053))
+* `CHORE`: remove broken touch interaction ([bpmn-io/diagram-js#796](https://github.com/bpmn-io/diagram-js/issues/796))
+* `DEPS`: update to `diagram-js@14.0.0`
+
+### Breaking Changes
+
+* Migrated to `diagram-js@14` which removes touch interaction module, and dependency on unsupported `hammerjs` package. If you rely on touch interaction, you need to support touch interaction on your own.
+
+## 16.5.0
+
+* `FEAT`: handle adding vertical lanes ([#2086](https://github.com/bpmn-io/bpmn-js/issues/2086))
+* `FIX`: don't fill multiple parallel events ([#2085](https://github.com/bpmn-io/bpmn-js/issues/2085))
+
+## 16.4.0
+
+* `FEAT`: handle resizing of vertical lanes ([#2062](https://github.com/bpmn-io/bpmn-js/issues/2062))
+* `FEAT`: allow text annotations to overlap with the borders of subprocesses and pools ([#2049](https://github.com/bpmn-io/bpmn-js/issues/2049))
+* `FEAT`: support modeling of gateway without marker ([#2063](https://github.com/bpmn-io/bpmn-js/issues/2063))
+* `FIX`: correctly remove vertical lanes ([#2081](https://github.com/bpmn-io/bpmn-js/pull/2081))
+* `FIX`: do not set label on planes ([#2033](https://github.com/bpmn-io/bpmn-js/issues/2033))
+
+## 16.3.2
+
+* `FIX`: support core replace in compensation behavior ([#2073](https://github.com/bpmn-io/bpmn-js/issues/2073))
+
+## 16.3.1
+
+* `FIX`: do not remove connection that is being created when pasting compensation boundary event and handler ([#2069](https://github.com/bpmn-io/bpmn-js/pull/2069))
+
+## 16.3.0
+
+* `FEAT`: improve handling of compensation association ([#2038](https://github.com/bpmn-io/bpmn-js/issues/2038))
+
+## 16.2.0
+
+* `DEPS`: update to `bpmn-moddle@8.1.0`
+
+## 16.1.0
+
+* `DEPS`: update to `diagram-js@13.4.0`
+* `DEPS`: update to `diagram-js-direct-editing@2.1.1`
+* `DEPS`: drop unused `object-refs` dependency
+
+## 16.0.0
+
+* `FEAT`: render vertical pools and lanes ([#2024](https://github.com/bpmn-io/bpmn-js/pull/2024))
+* `FEAT`: sentence case titles and labels ([#2023](https://github.com/bpmn-io/bpmn-js/issues/2023))
+* `FIX`: ensure all error translations are collected ([#2040](https://github.com/bpmn-io/bpmn-js/pull/2040))
+* `DEPS` update to diagram-js@13.0.0
+
+### Breaking Changes
+
+* Major updates to [diagram-js@13](https://github.com/bpmn-io/diagram-js/blob/develop/CHANGELOG.md#1300) and [didi@10](https://github.com/nikku/didi/blob/main/CHANGELOG.md#1000). Make sure to check out the linked changelog updates.
+* Multiple translation labels has been updated to sentence case. If you rely on the old casing, you need to update your translations.
+
+## 15.2.2
+
+* `FIX`: use correct types in BpmnRenderUtil ([#2036](https://github.com/bpmn-io/bpmn-js/pull/2036))
+
+## 15.2.1
+
+* `DEPS`: update to `diagram-js@13.8.1`
+
+## 15.2.0
+
+* `FEAT`: remove selection outline from connections ([diagram-js#826](https://github.com/bpmn-io/diagram-js/pull/826))
+* `FEAT`: position context pad according to last waypoint for connections ([diagram-js#826](https://github.com/bpmn-io/diagram-js/pull/826))
+* `FIX`: prevent access of non-existing connection bounds ([diagram-js#824](https://github.com/bpmn-io/diagram-js/pull/824))
+* `FIX`: correct selection outline size for end event ([#2026](https://github.com/bpmn-io/bpmn-js/pull/2026))
+* `DEPS`: update to `diagram-js@13.8.0`
+
 ## 15.1.3
 
 * `FIX`: revert `djs-dragging` CSS class changes ([#2016](https://github.com/bpmn-io/bpmn-js/pull/2016))
@@ -829,7 +1069,7 @@ Copy and paste as well as create is completely reworked:
 
 ### Breaking Changes
 
-* `CHORE`: bump to [`diagram-js@4.0.0`](https://github.com/bpmn-io/diagram-js/blob/master/CHANGELOG.md#400)
+* `CHORE`: bump to [`diagram-js@4.0.0`](https://github.com/bpmn-io/diagram-js/blob/main/CHANGELOG.md#400)
 
 ## 3.5.0
 
@@ -865,7 +1105,7 @@ _Republish of `v3.4.0` without `.git` folder._
 * `FEAT`: consistently layout connection on reconnect start and end ([#971](https://github.com/bpmn-io/bpmn-js/pull/971))
 * `FEAT`: layout connection on element removal ([#989](https://github.com/bpmn-io/bpmn-js/issues/989))
 * `FIX`: properly crop sequence flow ends on undo/redo ([#940](https://github.com/bpmn-io/bpmn-js/issues/940))
-* `CHORE`: bump to [`diagram-js@3.3.0`](https://github.com/bpmn-io/diagram-js/blob/master/CHANGELOG.md#330)
+* `CHORE`: bump to [`diagram-js@3.3.0`](https://github.com/bpmn-io/diagram-js/blob/main/CHANGELOG.md#330)
 
 ## 3.3.1
 
@@ -927,7 +1167,7 @@ _Republish of `v3.4.0` without `.git` folder._
 * `FEAT`: require `Ctrl/Cmd` to be pressed as a modifier key to move the canvas via keyboard errors
 * `FEAT`: auto-expand elements when children resize ([#786](https://github.com/bpmn-io/bpmn-js/issues/786))
 * `CHORE`: bind editor actions and keyboard shortcuts for explicitly added features only ([#887](https://github.com/bpmn-io/bpmn-js/pull/887))
-* `CHORE`: update to [`diagram-js@3.0.0`](https://github.com/bpmn-io/diagram-js/blob/master/CHANGELOG.md#300)
+* `CHORE`: update to [`diagram-js@3.0.0`](https://github.com/bpmn-io/diagram-js/blob/main/CHANGELOG.md#300)
 * `FIX`: disallow attaching of `BoundaryEvent` to a `ReceiveTask` following an `EventBasedGateway` ([#874](https://github.com/bpmn-io/bpmn-js/issues/874))
 * `FIX`: fix date in license ([#882](https://github.com/bpmn-io/bpmn-js/pull/882))
 
@@ -1001,7 +1241,7 @@ _Republish of `v2.0.0` due to registry error._
 ## 2.0.0
 
 * `FEAT`: allow data store to be modeled between participants ([#483](https://github.com/bpmn-io/bpmn-js/issues/483))
-* `CHORE`: update to [`diagram-js@2.0.0`](https://github.com/bpmn-io/diagram-js/blob/master/CHANGELOG.md#200)
+* `CHORE`: update to [`diagram-js@2.0.0`](https://github.com/bpmn-io/diagram-js/blob/main/CHANGELOG.md#200)
 * `FIX`: correctly handle missing `bpmndi:Label` bounds during model updating ([#794](https://github.com/bpmn-io/bpmn-js/issues/794))
 
 ### Breaking Changes
@@ -1010,7 +1250,7 @@ _Republish of `v2.0.0` due to registry error._
 
 ## 1.3.3
 
-* `CHORE`: update to [`bpmn-moddle@5.1.5`](https://github.com/bpmn-io/bpmn-moddle/blob/master/CHANGELOG.md#515)
+* `CHORE`: update to [`bpmn-moddle@5.1.5`](https://github.com/bpmn-io/bpmn-moddle/blob/main/CHANGELOG.md#515)
 
 ## 1.3.2
 

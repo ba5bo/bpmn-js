@@ -72,6 +72,20 @@ describe('features - context-pad', function() {
     }));
 
 
+    it('should add delete action to elements label by default', inject(function(elementRegistry, contextPad) {
+
+      // given
+      var element = elementRegistry.get('StartEvent_1');
+      var label = element.label;
+
+      // when
+      contextPad.open(label);
+
+      // then
+      expect(deleteAction(label)).to.exist;
+    }));
+
+
     it('should include delete action when rule returns true',
       inject(function(elementRegistry, contextPad, customRules) {
 
@@ -429,6 +443,34 @@ describe('features - context-pad', function() {
       })
     );
 
+
+    it('should append gateway with marker', inject(
+      function(dragging, contextPad, elementRegistry) {
+
+        // given
+        var task = elementRegistry.get('Task_1');
+
+        // when
+        contextPad.open(task);
+
+        contextPad.trigger('dragstart', padEvent('append.gateway'));
+
+        dragging.move(canvasEvent({ x: task.x, y: task.y }));
+        dragging.hover({ element: task });
+        dragging.move(canvasEvent({ x: task.x + task.width + 30, y: task.y }));
+
+        var context = dragging.context(),
+            elements = context.data.elements;
+
+        dragging.end();
+
+        // then
+        expect(elements).to.have.length(1);
+        expect(is(elements[0], 'bpmn:ExclusiveGateway')).to.be.true;
+        expect(elements[0].di.isMarkerVisible).to.be.true;
+      })
+    );
+
   });
 
 
@@ -709,6 +751,29 @@ describe('features - context-pad', function() {
       expect(domQueryAll('.djs-dragger', canvas.getLayer('complex-preview'))).to.have.length(2);
     }));
 
+
+    it('should remove append preview on close', inject(function(canvas, elementRegistry, contextPad) {
+
+      // given
+      var element = elementRegistry.get('Task_1');
+
+      contextPad.open(element);
+
+      // mock event
+      var event = padEvent('append.gateway');
+
+      contextPad.trigger('hover', event);
+
+      expect(canvas.getLayer('complex-preview')).to.exist;
+      expect(domQueryAll('.djs-dragger', canvas.getLayer('complex-preview'))).to.have.length(2);
+
+      // when
+      contextPad.close();
+
+      // then
+      expect(domQueryAll('.djs-dragger', canvas.getLayer('complex-preview'))).to.have.length(0);
+    }));
+
   });
 
 });
@@ -721,9 +786,9 @@ function padEntry(element, name) {
 
 function padEvent(entry) {
 
-  return getBpmnJS().invoke(function(overlays) {
+  return getBpmnJS().invoke(function(canvas) {
 
-    var target = padEntry(overlays._overlayRoot, entry);
+    var target = padEntry(canvas.getContainer(), entry);
 
     return {
       target: target,

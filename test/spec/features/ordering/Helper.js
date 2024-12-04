@@ -75,8 +75,7 @@ export function add(attrs, position, target, isAttach) {
 
     if (!target) {
       target = canvas.getRootElement();
-    } else
-    if (typeof target === 'string') {
+    } else if (typeof target === 'string') {
       target = getElement(target);
     }
 
@@ -206,7 +205,7 @@ export function expectZOrder() {
 
     if (next && compareZOrder(e, next) !== -1) {
       throw new Error(
-        'expected <element#' + (next.id || next) + '> to be in front of <element#' + (e.id || e) + '>'
+        `expected <element#${ next.id || next }> to be in front of <element#${ e.id || e }>`
       );
     }
   });

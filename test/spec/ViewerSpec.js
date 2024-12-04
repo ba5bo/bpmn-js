@@ -1,3 +1,5 @@
+import { expectToBeAccessible } from '@bpmn-io/a11y';
+
 import TestContainer from 'mocha-test-container-support';
 
 import Diagram from 'diagram-js/lib/Diagram';
@@ -76,6 +78,19 @@ describe('Viewer', function() {
 
     // then
     expect(viewer).to.be.instanceof(Diagram);
+  });
+
+
+  it('should not include Outline module by default', function() {
+
+    // given
+    var viewer = new Viewer();
+
+    // when
+    var outline = viewer.get('outline', false);
+
+    // then
+    expect(outline).not.to.exist;
   });
 
 
@@ -1793,6 +1808,21 @@ describe('Viewer', function() {
 
   it('default export', function() {
     expect(ViewerDefaultExport).to.equal(Viewer);
+  });
+
+
+  describe('accessibility', function() {
+
+    it('should report no issues', async function() {
+
+      // given
+      const xml = require('../fixtures/bpmn/simple.bpmn');
+      await createViewer(container, Viewer, xml);
+
+      // then
+      await expectToBeAccessible(container);
+    });
+
   });
 
 });

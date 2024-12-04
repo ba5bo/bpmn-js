@@ -1,3 +1,5 @@
+import { expectToBeAccessible } from '@bpmn-io/a11y';
+
 import Modeler from 'lib/Modeler';
 import Viewer from 'lib/Viewer';
 import NavigatedViewer from 'lib/NavigatedViewer';
@@ -46,9 +48,6 @@ describe('Modeler', function() {
 
     modeler = new Modeler({
       container: container,
-      keyboard: {
-        bindTo: document
-      }
     });
 
     setBpmnJS(modeler);
@@ -83,6 +82,15 @@ describe('Modeler', function() {
 
   it('should import nested lanes', function() {
     var xml = require('./features/modeling/lanes/lanes.bpmn');
+    return createModeler(xml).then(function(result) {
+
+      expect(result.error).not.to.exist;
+    });
+  });
+
+
+  it('should import vertical collaboration', function() {
+    var xml = require('../fixtures/bpmn/collaboration-vertical.bpmn');
     return createModeler(xml).then(function(result) {
 
       expect(result.error).not.to.exist;
@@ -174,43 +182,6 @@ describe('Modeler', function() {
   });
 
 
-  collectTranslations && describe('translate support', function() {
-
-    var xml = require('../fixtures/bpmn/simple.bpmn');
-
-    it('should translate special terms', () => {
-
-      return createModeler(xml).then(function(result) {
-
-        var modeler = result.modeler;
-        var err = result.error;
-
-        if (err) {
-          throw err;
-        }
-
-        // given
-        var translate = modeler.get('translate');
-
-        var specialTerms = [
-          'element {element} referenced by {referenced}#{property} not yet drawn',
-          'failed to import {element}',
-          'missing {semantic}#attachedToRef',
-          'multiple DI elements defined for {element}'
-        ];
-
-        // assume
-        expect(translate).to.exist;
-
-        // then
-        specialTerms.forEach(translate);
-      });
-
-    });
-
-  });
-
-
   !collectTranslations && describe('translate support', function() {
 
     var xml = require('../fixtures/bpmn/simple.bpmn');
@@ -241,6 +212,19 @@ describe('Modeler', function() {
 
     });
 
+  });
+
+
+  it('should include Outline module by default', function() {
+
+    // given
+    var modeler = new Modeler();
+
+    // when
+    var outline = modeler.get('outline', false);
+
+    // then
+    expect(outline).to.exist;
   });
 
 
@@ -946,6 +930,21 @@ describe('Modeler', function() {
   it('should expose Viewer and NavigatedViewer', function() {
     expect(Modeler.Viewer).to.equal(Viewer);
     expect(Modeler.NavigatedViewer).to.equal(NavigatedViewer);
+  });
+
+
+  describe('accessibility', function() {
+
+    it('should report no issues', async function() {
+
+      // given
+      const xml = require('../fixtures/bpmn/simple.bpmn');
+      await createModeler(xml);
+
+      // then
+      await expectToBeAccessible(container);
+    });
+
   });
 
 });

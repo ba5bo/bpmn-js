@@ -1,3 +1,5 @@
+import { expectToBeAccessible } from '@bpmn-io/a11y';
+
 import {
   bootstrapModeler,
   getBpmnJS,
@@ -535,20 +537,21 @@ describe('features/popup-menu - replace menu provider', function() {
         // given
         var task = elementRegistry.get('SequentialTask'),
             businessObject = getBusinessObject(task),
-            loopCharacteristics = Object.assign({}, businessObject.loopCharacteristics);
+            loopCharacteristics = businessObject.get('loopCharacteristics');
 
         openPopup(task);
 
         // assume
-        expect(loopCharacteristics.isSequential).to.be.true;
+        expect(loopCharacteristics.get('isSequential')).to.be.true;
 
         // when
         triggerAction('toggle-parallel-mi');
 
         // then
-        var newLoopCharacteristics = businessObject.loopCharacteristics;
+        const newLoopCharacteristics = businessObject.get('loopCharacteristics');
 
-        expect(newLoopCharacteristics.isSequential).to.be.false;
+        expect(newLoopCharacteristics).to.equal(loopCharacteristics);
+        expect(newLoopCharacteristics.get('isSequential')).to.be.false;
         expect(omit(newLoopCharacteristics, 'isSequential')).to.eql(omit(loopCharacteristics, 'isSequential'));
       }));
 
@@ -660,21 +663,22 @@ describe('features/popup-menu - replace menu provider', function() {
         // given
         var task = elementRegistry.get('ParallelTask'),
             businessObject = getBusinessObject(task),
-            loopCharacteristics = Object.assign({}, businessObject.loopCharacteristics);
+            loopCharacteristics = businessObject.get('loopCharacteristics');
 
         openPopup(task);
 
         // assume
-        expect(loopCharacteristics.isSequential).to.be.undefined;
+        expect(loopCharacteristics.get('isSequential')).to.be.false;
 
         // when
         triggerAction('toggle-sequential-mi');
 
         // then
-        var newLoopCharacteristics = businessObject.loopCharacteristics;
+        var newLoopCharacteristics = businessObject.get('loopCharacteristics');
 
-        expect(newLoopCharacteristics.isSequential).to.be.true;
-        expect(omit(newLoopCharacteristics, 'isSequential')).to.eql(loopCharacteristics);
+        expect(newLoopCharacteristics).to.equal(loopCharacteristics);
+        expect(newLoopCharacteristics.get('isSequential')).to.be.true;
+        expect(omit(newLoopCharacteristics, 'isSequential')).to.eql(omit(loopCharacteristics, 'isSequential'));
       }));
 
     });
@@ -1711,7 +1715,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
         // then
         expect(emptyPoolLabel).to.exist;
-        expect(emptyPoolLabel.textContent).to.eql('Empty Pool (removes content)');
+        expect(emptyPoolLabel.textContent).to.eql('Empty pool/participant (removes content)');
       }));
 
 
@@ -1727,7 +1731,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
         // then
         expect(emptyPoolLabel).to.exist;
-        expect(emptyPoolLabel.textContent).to.eql('Empty Pool');
+        expect(emptyPoolLabel.textContent).to.eql('Empty pool/participant');
       }));
 
     });
@@ -1839,6 +1843,26 @@ describe('features/popup-menu - replace menu provider', function() {
 
     });
 
+  });
+
+
+  describe('a11y', function() {
+
+    beforeEach(bootstrapModeler(diagramXMLReplace, { modules: testModules }));
+
+
+    it('should report no violations', inject(async function(elementRegistry) {
+
+      // given
+      const startEvent = elementRegistry.get('StartEvent_1');
+
+      // when
+      openPopup(startEvent);
+
+      // then
+      const container = getMenuContainer();
+      await expectToBeAccessible(container);
+    }));
   });
 
 

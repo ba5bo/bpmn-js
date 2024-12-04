@@ -1,7 +1,7 @@
 name: CI
 on: [ push, pull_request ]
 jobs:
-  Build:
+  build:
 
     strategy:
       matrix:
@@ -31,7 +31,9 @@ jobs:
         TEST_BROWSERS: ChromeHeadless
       run: npm run all
     - name: Upload Coverage
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v5
       if: runner.os == 'Linux'
       with:
         fail_ci_if_error: true
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
